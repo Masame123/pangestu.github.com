@@ -61,11 +61,13 @@
         </div>
         <div class="row justify-content-around fs-5">
           <div class="col-md-4">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex atque nemo quidem eius hic veniam a cum veritatis modi blanditiis!</p>
-          </div>
+            <p>Saya orang yang di siplin,fokus, dan tepat waktu terhadap hasil
+              kerja,saya juga realistis saat menentukan target atau tujuan dan
+              selalu berupaya keras untuk bisa mencapai tujuan tersebut dengan
+              cara yang baik dan efisien.
+              </div>
           <div class="col-md-4">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis in sunt laboriosam? Eaque quos quibusdam nulla ut! Cum minus id tempora?</p>
-          </div>
+            <p>Saya merupakan fresh graduate dengan skill yang mumpuni. Dalam sehari saya bisa menyelesaikan tugas tanpa mengurangi kualitas. Saya menguasai beberapa teknik penulisan dibutuhkan untuk promosi perusahaan dan saya telah berpengalaman dalam menulis review dari puluhan produk</div>
         </div>
       </div>
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
@@ -151,20 +153,28 @@
         </div>
         <div class="row justify-content-around">
           <div class="col-md-6">
-            <form>
+            <div class="alert alert-success alert-dismissible fade show d-none my-alert" role="alert">
+              <strong>Thank's you </strong> your message was successful
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <form name="contact-messages">
               <div class="mb-3">
                 <label for="Name" class="form-label">Nama Lengkap</label>
-                <input type="text" class="form-control" id="email" aria-describedby="email" />
+                <input type="text" class="form-control" id="name" aria-describedby="name" name="nama" />
               </div>
               <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
+                <input type="email" class="form-control" id="email" aria-describedby="email" name="email" />
               </div>
               <div class="mb-3">
                 <label for="Messages" class="form-label">Messages</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                <textarea class="form-control" id="Messages" rows="3" name="pesan"></textarea>
               </div>
-              <button type="submit" class="btn btn-primary">Kirim</button>
+              <button type="submit" class="btn btn-primary btn-kirim">Kirim</button>
+              <button class="btn btn-primary btn-loading d-none" type="button" disabled>
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                Loading...
+              </button>
             </form>
           </div>
         </div>
@@ -175,10 +185,39 @@
 
     <!-- Footer -->
     <footer class="text-white p-3 text-center" style="background-color: #ff31c1">
-      <p>Created with <i class="bi bi-heartbreak-fill text-black"></i> by <a href="https://amazon.com" class="text-white fw-bold">Imam Aby Pangestu</a></div></div></p>
+      <p>Created with <i class="bi bi-heartbreak-fill text-black"></i> by <a href="https://www.instagram.com/imamaby_cs" class="text-white fw-bold">Imam Aby Pangestu</a></div></div></p>
     </footer>
     <!-- End Footer -->
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script>
+      const scriptURL = 'https://script.google.com/macros/s/AKfycbxYQpen8QJuPQBJGL0Wi0mZl6vNrPOQ3ZN_YWYDhTVLkdAcA2Sya_4UF1MBoWWbTv8QLw/exec'
+      const form = document.forms['contact-messages']
+      const btnKirim =document.querySelector('.btn-kirim')
+      const btnLoading = document.querySelector('.btn-loading')
+      const myAlert = document.querySelector('.my-alert')
+
+      form.addEventListener('submit', e => {
+        e.preventDefault()
+        // ketika tombol submit diklik
+        //tampilkan tombol loading, hilangkan tombol kirim
+        btnLoading.classList.toggle('d-none')
+        btnKirim.classList.toggle('d-none')
+        fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+          .then(response => {
+            //tampilkan tombol kirim, hilangkan tombol loading
+            btnLoading.classList.toggle('d-none')
+             btnKirim.classList.toggle('d-none')
+             //tampilkan alert
+             myAlert.classList.toggle('d-none')
+             //reset form
+             form.reset()
+             //reset alert
+             myAlert.reset()
+
+            console.log('Success!', response)})
+          .catch(error => console.error('Error!', error.message))
+      })
+    </script>
   </body>
 </html>
